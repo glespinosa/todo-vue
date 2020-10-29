@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div v-if="username" class="name-container">
+        Welcome, {{ username }}
+    </div>
     <input type="text" 
     class="todo-input" 
     v-model="newTodo" 
@@ -48,8 +51,10 @@ export default {
         TodoFiltered,
         TodoClearCompleted
     },
-    created(){
+    async created(){
+        await this.retrieveUser()
         this.retrieveTodos()
+
     },
     data(){
         return{
@@ -59,11 +64,11 @@ export default {
         }
     },
     computed:{
-        ...mapGetters(['remaining','anyRemaining','todosFiltered','showClearCompletedButton'])
+        ...mapGetters(['remaining','anyRemaining','todosFiltered','showClearCompletedButton','username'])
     },
 
     methods:{
-        ...mapActions(['addTodo','retrieveTodos']),
+        ...mapActions(['addTodo','retrieveTodos','retrieveUser']),
         addedTodo(){
             if(this.newTodo.trim().length === 0) return
             this.addTodo({

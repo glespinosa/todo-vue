@@ -36,4 +36,9 @@ label {
   &:hover {
     background: darken(#60bd4f, 10%);
   }
+
+  &:disabled {
+    background: lighten(#60bd4f, 25%);
+    cursor: not-allowed;
+  }
 }

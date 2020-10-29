@@ -12,9 +12,13 @@ export const store = new Vuex.Store({
         filter:'all',
         todos:[],
         token:localStorage.getItem('access_token') || null,
+        username : null
     },
 
     getters:{
+        username(state){
+            return state.username
+        },
         loggedIn(state){
             return state.token != null
         },
@@ -42,8 +46,12 @@ export const store = new Vuex.Store({
     },
 
     mutations:{
-        clearTodos(state){
+        retrieveUser(state,response){
+            state.username = response.data.name
+        },
+        clearState(state){
             state.todos = []
+            state.username = null
         },
         destroyToken(state){
             state.token = null
@@ -83,14 +91,28 @@ export const store = new Vuex.Store({
     },
 
     actions:{
-        clearTodos({ commit }){
-            commit('clearTodos')
+        retrieveUser(context){
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+
+                return new Promise(async function(resolve,reject)   {
+                    try{
+                        const response = await axios.get('/user')
+                        const data = response
+                        context.commit('retrieveUser',data)
+                        resolve(response)
+                    }catch(error){
+                        reject(error)
+                    }
+                    
+                })
+        },
+        clearState({ commit }){
+            commit('clearState')
         },
         register({ commit },credentials){
             return new Promise(async function (resolve,reject) {
                 try{
                     const response = await axios.post('/register',credentials)
-                    console.log(response)
                     resolve(response)
                 }catch(error){
                     reject(error)

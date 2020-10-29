@@ -1,17 +1,22 @@
+import './assets/scss/index.scss'
+
 import Vue from 'vue'
 import Master from './components/layouts/Master.vue'
+import { ValidationProvider } from 'vee-validate/dist/vee-validate.full.esm'
+import { ValidationObserver } from 'vee-validate'
 
 import routes from './routes'
 import VueRouter from 'vue-router'
 import { store } from './store/store'
-import './assets/scss/index.scss'
 
 window.eventBus = new Vue()
 
+Vue.component('ValidationProvider',ValidationProvider)
+Vue.component('ValidationObserver',ValidationObserver)
+
 Vue.config.productionTip = false
+
 Vue.use(VueRouter)
-
-
 
 const router = new VueRouter({
   routes:routes,

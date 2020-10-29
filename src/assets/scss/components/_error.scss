@@ -1,0 +1,20 @@
+.server-error {
+  margin: 12px 0;
+  font-size: 16px;
+  padding: 10px 16px;
+  color: #a94442;
+  background: #f3dede;
+  border-radius: 4px;
+  display: block;
+}
+
+.form-error {
+  margin: 12px 0;
+  font-size: 16px;
+  color: #a94442;
+  display: block;
+}
+
+.input-error {
+  border: 1px solid red;
+}
